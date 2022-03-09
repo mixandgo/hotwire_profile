@@ -1,0 +1,22 @@
+<% if current_user.profile_complete? %>
+<% else %>
+  <div class="grid grid-cols-2 grid-gap-4">
+    <div>
+      <%= turbo_frame_tag current_user do %>
+        <%= form_for current_user, method: :put, html: { class: "animatecss animatecss-headShake prose bg-gray-100 p-4 block" } do |f| %>
+          <div>
+            Please complete your profile.
+          </div>
+          <div>
+            <progress class="progress progress-primary" value="<%= current_user.profile_complete %>" max="100"></progress>
+          </div>
+          <%= render "users/#{current_user.missing_profile_section}", f: f %>
+          <%= f.submit :save, class: "inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-900 mr-4" %>
+        <% end %>
+      <% end %>
+    </div>
+    <div>
+      <img class="ml-8 mask mask-squircle" src="https://api.lorem.space/image/face?w=260&h=260" />
+    </div>
+  </div>
+<% end %>
