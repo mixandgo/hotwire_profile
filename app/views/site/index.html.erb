@@ -1,3 +1,11 @@
-Hello
+<div class="mb-4 prose"><h1>Dashboard</h1></div>
 
-<button class="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-900">Button</button>
+<% if user_signed_in? %>
+ <div class="mb-4 prose">Welcome <%= current_user.name || current_user.email %></div>
+
+ <%= render partial: "users/profile" %>
+<% else %>
+  <%= turbo_frame_tag "new-user" do %>
+    <%= link_to "Sign up", new_user_registration_path, class: "inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-900" %>
+  <% end %>
+<% end %>
